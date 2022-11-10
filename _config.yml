@@ -1,0 +1,6 @@
+#Jekyll configuration
+name: Platform Engineering Exam
+description: Platform Engineering Exam
+url: "http://francoisbay.github.io"
+markdown: kramdown
+highlighter: rouge
