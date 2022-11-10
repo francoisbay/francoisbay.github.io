@@ -1,0 +1,52 @@
+# Platform Engineering Exam
+
+##Instructions:
+
+Create a new branch in your Github repo called platform_exam. Upload your answers by pushing commits to this branch.
+
+Your answers are expected to be commands used to satisfy each task, as well as screenshots to prove its completion.
+
+Lastly, do not over think! :) 
+
+1. The Marketing team wants to get onboarded in your Kubernetes service offering. Create a namespace for their team and name it `marketing`.
+
+2. The Sales team wants to dabble on databases. Give them an environment they can play around by creating a pod under `sales` namespace. Name the pod `db` that uses the `redis` image, and the container should be named as `redis-db`. Make sure that the pod is not restarted when completed or crashed.
+
+At the same time, your tech lead would like to know on occasion the status of this pod. Write a script that does this, under `/etc/check_pod_status.sh`. The script should use `kubectl` to check the pod’s status.
+
+3. Create a pod under `marketing` namespace that uses `busybox:1.28` image. The pod must be named as `busybox` and the container should be named as `command_pod`.
+
+4. Create a new deployment called `nginx-deploy` under `marketing` namespace using image `nginx:1.16` and 3 replicas. Next, upgrade the deployment to version `1.17` via rolling update. Make sure that the version upgrade is recorded in the history's annotation.
+
+5. Your manager is asking: what is the Marketing team's `nginx-deploy` deployment's current `RollingUpdateStrategy`?
+
+6. You just went to lunch with the Database admin team and they have secretly given you the access to their non-production database. You will be using this credential to test your application, of course for non-nefarious reasons.
+
+Create a secret for the following values:
+- username: `dba`
+- password: `dontsharethispassword`
+Utilize this secret by creating a Pod called `alpine-pod-secret` using the image `redis:alpine` then mount this secret as a volume on `/etc/dbsecret`. You'd want to monitor your pod's health in real time, so make sure your pod won't be restarted by K8s if it crashes.
+
+7. There was a miscommunication between your team and the customer. The customer is saying that your team was supposed to spin-up the previously created `busybox` pod under `sales` namespace and not the `marketing` namespace. To make ammends, move the pod from `marketing` namespace to `sales` namespace. It doesn't matter if you shut the pod down, since it doesn't have production traffic anyways.
+
+8. Your company's I.T. team is building an HR system and they're currently working on its web server component. Help the I.T. team by creating a deployment of 3 replicas that uses `nginx:latest` image, and make sure it is listening on port `80`. Since this HR system will be accessed by employees through the internet, create a service for this deployment and have the node listen on port `33033`. Lastly, do a test connectivity from the service by hitting the service.
+
+9. Finance team heard about the good stuff Kubernetes offers, so they want in on the action. Create a `busybox` pod under `finance` namespace that uses the `busybox` image. Make sure that K8s will try to restart/recover the pod if ever it crashes.
+
+10. A clause was added by the Legal team in your company's product. The clause is as follows:
+```
+Section 13.4b: Your a wizard, Harry.
+```
+You noticed the misuse of "your" and "you're" but didn't bother to correct it anyway.
+
+Create a configMap called `youre` and create it from a file as `/etc/newclause.txt`, under `legal` namespace. Use `newclause` as its key name.
+
+11. Get all the pods and deployments across all namespaces, and store it under `/etc/allthesmallthings`.
+
+12. You were contacted by the Sales team and was informed that they are done using the `busybox` pod. To free-up resources, delete their `busybox` pod. Since the deletion might take a long time, use a delete command that will provide zero grace period and will forcefully delete the pod.
+
+13. The Marketing team's developer did the unspeakable and deployed on a Friday night. He calls you and explains that he found out that the web app he's writing is not compatible with the Nginx version currently deployed. He's requesting to rollback the `nginx-deploy` deployment's image to `nginx:1.16`. Do a rollback by utilizing Kubernetes' rollback feature. The developer is also requesting to scale up the deployment, so once you're done with the rollback, scale up the deployment from 3 to 5 replicas.
+
+14. The customer’s DevOps team would like to get a list of all namespaces. Get the list of namespaces and save it to `/etc/namespaces_list`.
+
+15. Write one statement that stuck with you in learning Kubernetes during the week. Save it in a file called `index.html` and create a configMap from that file. Run an `nginx` pod, expose the container via port 80, then mount it in the pod as a volume under `/usr/share/nginx/html/`. Make sure that the Service created is listening on the EC2 node's port 31000. Lastly, access the Service from your browser.
